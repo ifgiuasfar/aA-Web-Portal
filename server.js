@@ -9,20 +9,35 @@ const pool=require('./database/db');
  app.use(express.json())
  app.use(cors())
 
-app.use(express.static(path.join(__dirname, 'assets'))); 
-app.use( express.static(path.join(__dirname + '/node_modules/ol')));
+ app.use(express.static(`${__dirname}/public`)); 
+//app.use(express.static(path.join(__dirname, 'assets'))); 
+//app.use( express.static(path.join(__dirname + '/node_modules/ol')));
 
-  
+
 
 // Redirect
 app.get('/',function(req,res){
     res.sendFile(__dirname + '/index.html');
     //__dirname : It will resolve to your project folder.
   });
-  app.get('/dashboard',function(req,res){
-    res.sendFile(__dirname + '/index.html');
-    //__dirname : It will resolve to your project folder.
+app.get('/twodimension',function(req,res){
+    res.sendFile(__dirname + '/public/twodimension.html');
   });
+app.get('/threedimension',function(req,res){
+    res.sendFile(__dirname + '/public/threedimension.html');
+  }); 
+  app.get('/services',function(req,res){
+    res.sendFile(__dirname + '/public/services.html');
+  }); 
+  //teams  
+  app.get('/teams',function(req,res){
+    res.sendFile(__dirname + '/public/teams.html');
+  });
+  //about
+  app.get('/about',function(req,res){
+    res.sendFile(__dirname + '/public/about.html');
+  });
+  
 //routes
 app.use("/data",require("./routes/routes"))
 
