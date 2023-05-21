@@ -10,8 +10,10 @@ const pool=require('./database/db');
  app.use(cors())
 
  app.use(express.static(`${__dirname}/public`)); 
+ app.use(express.static(`${__dirname}/node_modules`)); 
+ app.use(express.static(`${__dirname}/data`))
 //app.use(express.static(path.join(__dirname, 'assets'))); 
-//app.use( express.static(path.join(__dirname + '/node_modules/ol')));
+
 
 
 
@@ -37,7 +39,7 @@ app.get('/threedimension',function(req,res){
   app.get('/about',function(req,res){
     res.sendFile(__dirname + '/public/about.html');
   });
-  
+
 //routes
 app.use("/data",require("./routes/routes"))
 

@@ -1,8 +1,11 @@
 const router=require('express').Router();
 const pool= require('../database/db');
 
-//getting the files from health facilitites
+//getting the tif file
+const fs = require('fs');
 
+
+//getting the files from health facilitites
 router.get("/api/healthfacilities",async(req,res)=>{
     try {
         const allfacilities= await pool.query("SELECT id, ST_AsGeojson(geom)::json as point, name FROM public.nairobi_health_facilities");
