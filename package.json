@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start":"node server.js"
-    
+    "start":"node server.js",
+    "postinstall": "export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig/:$PKG_CONFIG_PATH"
+
   },
   "engines": {
     "node": "18.12.1"
