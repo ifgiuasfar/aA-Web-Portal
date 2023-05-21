@@ -1,4 +1,4 @@
 node_modules
 dist
-data/Multispectral/ms.tif
-data/RGB/As_2022_RGB.tif
+"node_modules" 
+lib/
