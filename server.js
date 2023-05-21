@@ -43,8 +43,9 @@ app.get('/threedimension',function(req,res){
 //routes
 app.use("/data",require("./routes/routes"))
 
-app.listen(9000,()=>{
-    console.log("server started  on port 9000");
+const port = process.env.PORT || 9000;
+app.listen(port,()=>{
+    console.log("server started  on port "+ port );
 });
 // Error handling middleware
 app.use(function(err, req, res, next) {
