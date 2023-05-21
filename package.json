@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start":"node server.js",
-    "heroku-postbuild": "cd node_modules/gl && npm install",
-    "postinstall": "npm run heroku-postbuild"
+    "start":"node server.js"
   },
   "engines": {
     "node": "18.12.1"
