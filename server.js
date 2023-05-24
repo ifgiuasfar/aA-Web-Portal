@@ -11,11 +11,9 @@ const pool=require('./database/db');
 
  app.use(express.static(`${__dirname}/public`)); 
  app.use(express.static(`${__dirname}/node_modules`)); 
- app.use(express.static(`${__dirname}/data`))
+ app.use(express.static(`${__dirname}/data`));
+ app.use(express.static(`${__dirname}/potree`));
 //app.use(express.static(path.join(__dirname, 'assets'))); 
-
-
-
 
 // Redirect
 app.get('/',function(req,res){
@@ -25,8 +23,10 @@ app.get('/',function(req,res){
 app.get('/twodimension',function(req,res){
     res.sendFile(__dirname + '/public/twodimension.html');
   });
-app.get('/threedimension',function(req,res){
-    res.sendFile(__dirname + '/public/threedimension.html');
+ app.get('/threedimension',function(req,res){
+   res.sendFile(__dirname + '/public/threedimension.html');
+   //res.sendFile(__dirname+ '/node_modules/potree/examples/shapefiles.html');
+
   }); 
   app.get('/services',function(req,res){
     res.sendFile(__dirname + '/public/services.html');

@@ -1,5 +1,5 @@
 
-var map = L.map('map').setView([ -33, 147], 6);
+var map = L.map('map',{drawControl:true}).setView([ -33, 147], 6);
 var streets= L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 })
@@ -21,7 +21,7 @@ var basemaps = {
 //Map scale showup
 L.control.scale({metric:true}).addTo(map);
 //zoom purpose
-L.control.zoom().addTo(map)
+
 
 
 //sample geoJSON
@@ -74,24 +74,11 @@ const windSpeed = L.leafletGeotiff(imgUrl,
     renderer:plottyRenderer
   }).addTo(map);
 
-// const renderer = L.LeafletGeotiff.rgb();
+  let drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
+  map.on('draw:created', (e) => {
+    // Each time we create a feature(point, line or polygon), we add this feature to the feature group wich is drawnItems in this case
+    drawnItems.addLayer(e.layer);
+});
 
-// const options = {
-//   // Optional, band index to use as R-band
-//   rBand: 0,
-//   // Optional, band index to use as G-band
-//   gBand: 1,
-//   // Optional, band index to use as B-band
-//   bBand: 2,
-//   // band index to use as alpha-band
-//   // NOTE: this can also be used in combination with transpValue, then referring to a
-//   // color band specifying a fixed value to be interpreted as transparent
-//   alphaBand: 0,
-//   // for all values equal to transpValue in the band alphaBand, the newly created alpha
-//   // channel will be set to 0 (transparent), all other pixel values will result in alpha 255 (opaque)
-//   transpValue: 0,
-//   renderer: renderer,
-// };
-
-// // create layer
-// var layer = L.leafletGeotiff(path, options).addTo(map);
+L.control.zoom().addTo(map)
