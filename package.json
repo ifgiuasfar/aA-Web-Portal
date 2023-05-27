@@ -25,10 +25,6 @@
   },
   "engines": {
     "node": "18.x",
-    "npm": "8.x",
-    "yarn": "1.x"
-  },
-  "devDependencies": {
-    "webpack-cli": "^5.1.1"
+    "npm": "8.x"
   }
 }
