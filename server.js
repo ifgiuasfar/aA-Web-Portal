@@ -1,6 +1,8 @@
 const express =require('express');
 const path = require('path');
 const cors=require('cors');
+
+const axios = require('axios');
 const app= express();
 
 const pool=require('./database/db');
@@ -38,6 +40,17 @@ app.get('/twodimension',function(req,res){
   //about
   app.get('/about',function(req,res){
     res.sendFile(__dirname + '/public/about.html');
+  });
+  app.get('/geoserver-proxy', async (req, res) => {
+    const geoserverUrl = 'http://localhost:8080/geoserver/cite/wms' + req.url;
+  
+    try {
+      const response = await axios.get(geoserverUrl, { responseType: 'arraybuffer' });
+      res.set(response.headers);
+      res.send(response.data);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
   });
 
 //routes
