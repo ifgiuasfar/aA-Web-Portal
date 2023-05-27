@@ -76,7 +76,7 @@ L.control.scale({metric:true}).addTo(map);
 
 const imageUrl = 'http://localhost:8080/geoserver/cite/wms?service=WMS&version=1.1.0&request=GetMap&layers=cite:Orthomosaic_Multispectral&bbox=7.570063780490534,51.943590542913974,7.574740819568534,51.94677105570398&width=768&height=522&srs=EPSG:4326&format=image/jpeg';
 const imageUrl1 = 'http://localhost:9000/geoserver-proxy?service=WMS&version=1.1.0&request=GetMap&layers=cite:Orthomosaic_Multispectral&bbox=7.570063780490534,51.943590542913974,7.574740819568534,51.94677105570398&width=768&height=522&srs=EPSG:4326&format=image/jpeg';
-const imgrUrl2='./public/data/omms.jpg';
+const imageUrl2 = './data/omms.jpg';
 const bounds = [[51.943590542913974, 7.570063780490534],
                 [51.946771055703981,  7.574740819568534]];
 img = L.imageOverlay(imageUrl2, bounds  );
