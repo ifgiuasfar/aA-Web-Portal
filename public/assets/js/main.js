@@ -68,8 +68,18 @@ ms=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
     maxNativeZoom: 18,
    format: 'image/png',   
 });
-ms.addTo(map);
-dummy=L.ImageOvelay('./data/omms.jpg').addTo(map)
+
+const imageUrl= './data/omms.jpg';
+const bounds = [[51.943590542913974, 7.570063780490534], [51.946771055703981,  7.574740819568534]];
+var msa = L.imageOverlay(imageUrl, latLngBounds, {
+  opacity: 0.8,
+  errorOverlayUrl: errorOverlayUrl,
+  alt: altText,
+  interactive: true
+}).addTo(map);
+L.rectangle(bounds).addTo(map);
+map.fitBounds(bounds);
+
 
 // function showGetFeatureInfo(latlng,layer){
 //   var prop = layer.features[0].properties;
@@ -114,13 +124,7 @@ transparent_slider.addEventListener('input',function(){
 
 // const imageUrl1 = 'http://localhost:9000/geoserver-proxy?service=WMS&version=1.1.0&request=GetMap&layers=cite:Orthomosaic_Multispectral&bbox=7.570063780490534,51.943590542913974,7.574740819568534,51.94677105570398&width=768&height=522&srs=EPSG:4326&format=image/jpeg&STYLES=raster';
 // const rgb ='http://localhost:9000/geoserver-proxy?service=WMS&version=1.1.0&request=GetMap&layers=cite:Aa_2022_RGB&bbox=7.569617411262769,51.943382785237084,7.575163927539459,51.94707385427448&width=768&height=511&srs=EPSG:4326&styles=&format=image/jpeg';
-// const imageUrl2 = './data/omms.jpg';
-// const bounds = [[51.943590542913974, 7.570063780490534], [51.946771055703981,  7.574740819568534]];
-// img=L.imageOverlay(rgb,bounds);
-// //img.filter('ndvi,colormap');
-// img.addTo(map);
-// L.rectangle(bounds).addTo(map);
-// map.fitBounds(bounds);
+
  // Initialize the FeatureGroup to store editable layers
 
 
