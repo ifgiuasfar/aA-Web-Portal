@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Web GIS Dashboard</title>
-        <!-- <link rel = "icon"  href="dashboard/app/static/images/lidaricon.png" 
-                type = "image/x-icon"> -->
+        <link rel = "icon"  href="dashboard/app/static/images/lidaricon.png" 
+                type = "image/x-icon">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -22,6 +22,7 @@
     #map {
       height: 100%;
       width: 100%;
+      border: 1px solid red;
       position: relative;
       z-index: 1;
   }
@@ -100,9 +101,33 @@
                       </nav>
                     </div> -->
                    
-          <div id="content-wrapper" class="container-fluid h-100 p-2"> 
+        <div id="content-wrapper" class="container-fluid ">  
+            <div id="services">
+              <div class="container">
+                  <h1 class="sub-title">Esri Cloud Services</h1>
+              </div>
+              <div class="services-list">
+                 
+                  <div>
+                    <i class="fa-solid fa-earth-americas"></i>
+                      <h2>Lidar  flying</h2>
+                      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, blanditiis ut. Tenetur incidunt quia sequi praesentium, libero illum dignissimos inventore eius earum accusantium. Illo ipsum, soluta aspernatur perspiciatis ea officiis?</p>
+                  </div>
+                  <div>
+                      <i class="fa-sharp fa-solid fa-chalkboard"></i>
+                      <h2>2D Imagery</h2>
+                          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium architecto esse vitae obcaecati, illo neque, qui dolor consequuntur deleniti quos laudantium sequi. Adipisci, expedita pariatur? Laborum voluptate dignissimos distinctio et?</p>
+                  </div>
+                  <div>
+                      <i class="fa-solid fa-earth-americas"></i>
+                      <h2>3D Imagery</h2>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis consequuntur reprehenderit illum molestiae nulla facere tenetur quaerat expedita voluptate quasi adipisci incidunt saepe at inventore harum cum, quod exercitationem magnam.</p>
+                  </div>
+              </div>
+          </div>
+            <!-- <div id="map"></div>  
             <div id="map-container">
-             <div id="map"></div>  
+             
             <div id="search">
              
               <form id="form">
@@ -110,12 +135,11 @@
                 <button id="button1" class="btn btn-primary">search </button>
               </form>
 
-              <!-- Additional buttons and forms go here -->
-            </div>
-          </div>
+               Additional buttons and forms go here 
+         
               
               
-            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4" > 
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4" > -->
               <!-- <div class="row my-4"> -->
                   
                   <!-- <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
@@ -147,14 +171,10 @@
               </li>
             </ul>
       </footer>
-  </main>
+  
 </div>
-				
-                    
-                    
-            </div>
+</div>
             
-          </div>  
         
          
 			
