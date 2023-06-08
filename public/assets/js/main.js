@@ -71,14 +71,12 @@ ms=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
 
 const imageUrl= './data/omms.jpg';
 const bounds = [[51.943590542913974, 7.570063780490534], [51.946771055703981,  7.574740819568534]];
-var msa = L.imageOverlay(imageUrl, latLngBounds, {
-  opacity: 0.8,
-  errorOverlayUrl: errorOverlayUrl,
-  alt: altText,
+var msa = L.imageOverlay(imageUrl, bounds, {
+  opacity:0.5,
+  alt: 'My Layer',
   interactive: true
 }).addTo(map);
-L.rectangle(bounds).addTo(map);
-map.fitBounds(bounds);
+
 
 
 // function showGetFeatureInfo(latlng,layer){
