@@ -1,0 +1,15 @@
+#map {
+  height: 50%;
+  width: 100%;
+  z-index: 1;
+}
+    .chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+  }
+
+    .chart-container canvas {
+    width: 50%; /* Adjust the width as needed */
+    height: 50%;
+  }

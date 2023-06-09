@@ -98,10 +98,12 @@ for(var i=0;i< layerRadio.length; i++){
     var  selectedLayer=this.value;
     if(selectedLayer==='rgb'){
       map.removeLayer(ms);
+      map.removeLayer(msa)
       rgb.addTo(map);
     }
     else if(selectedLayer==='multispectral'){
       map.removeLayer(rgb);
+      map.removeLayer(msa)
       ms.addTo(map)
     }
     else if(selectedLayer==='ms'){

@@ -18,14 +18,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css">
         <link rel="stylesheet" href="/assets/css/style.css">
-    
+        <link rel="stylesheet" href="/assets/css/chartformat.css">
     <style>
-    #map {
-      height: 100%;
-      width: 100%;
-      position: relative;
-      z-index: 1;
-  }
+  
   </style>	
 	
 	</head>
@@ -102,21 +97,21 @@
                     </div> -->
                    
           <div id="content-wrapper" class="container-fluid h-100 p-2"> 
-            <div id="map-container">
-            
-            <div id="search">
-             
-              <form id="form">
-                <input type="text" name="search" id="" class="form-control">
-                
-                <button id="button1" class="btn btn-primary">search </button>
-              </form>
-            
+          
 
-              <!-- Additional buttons and forms go here -->
-            </div>
-          </div>
-              
+            <div id="map"></div>
+            <hr>
+          <div class="chart-container">
+              <div id="chart1"><canvas  class="canvas" width="300" height="200" ></canvas> </div>
+               <div id="chart2"><canvas  class="canvas1" width="300" height="200"></canvas></div> 
+               
+                <div id="chart3"><canvas  class="canvas2" width="300" height="200" ></canvas> </div>
+                <div id="chart4"><canvas  class="canvas3" width="300" height="200" ></canvas> </div>
+                
+         </div>
+            
+            
+            
               
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4" > 
               <!-- <div class="row my-4"> -->
@@ -167,8 +162,32 @@
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
         <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-        
-	       <script src="./assets/js/main.js"  type="module"></script>
+        <script src="http://leaflet.calvinmetcalf.com/jam/shp/dist/shp.js"></script>
+        <script src="/assets/js/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	       <!-- <script src="./assets/js/main.js"  type="module"></script> -->
 	</body>
 
 </html>
+<script>
+  var map = L.map('map').setView([51.9451804, 7.5720384], 17);
+  var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Map data © Esri'
+  }).addTo(map)
+    var geo = L.geoJson({features:[]}, {
+      onEachFeature: function popUp(f, l) {
+        var out = [];
+        if (f.properties){
+          for(var key in f.properties){
+            out.push(key + ": " + f.properties[key]);
+          }
+          l.bindPopup(out.join("<br />"));
+        }
+      }
+    }).addTo(map);
+
+    var base = '/data/SenseBoxData.zip';
+    shp(base).then(function(data){
+      geo.addData(data);
+    });
+ </script> 
