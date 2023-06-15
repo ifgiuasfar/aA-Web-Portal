@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UAV web-portal</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="crossorigin=""/>  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css">
+    <!-- <link rel="stylesheet" href="/assets/css/chartformat.css"> -->
+    <style>
+        #map {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+           
+
+          }
+          a.navbar-brand img {
+            width: 200px;
+            height: 150px;
+            border-radius: 10%;
+        }
+    </style>
+</head>
+  <body>
+    <nav class="sidebar">
+      <!-- <a href="#" class="logo"></a> -->
+      <a class="navbar-brand logo">
+        <img src="./data/logo.jpg" alt="logo">
+        <p></p>
+    </a>
+      <div class="menu-content">
+        <ul class="menu-items">
+          <!-- <div class="menu-title"></div> -->
+
+          <li class="item">
+            <a href="#">Dashboard</a>
+          </li>
+
+          <li class="item">
+            <div class="submenu-item">
+              <span>2D visulization</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Your submenu title
+              </div>
+              <li class="item">
+                <a href="./RGB">RGB Image</a>
+              </li>
+              <li class="item">
+                <a href="./MultiSpectral">Multspectral</a>
+              </li>
+              <li class="item">
+                <a href="./Thermal">Thermal</a>
+              </li>
+              <li class="item">
+                <a href="./NDVI">NDVI comparsion</a>
+              </li>
+              <li class="item">
+                <a href="./Flightpath">Flight Path</a>
+              </li>
+              <li class="item">
+                <a href="./LandCover">Land Cover</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <div class="submenu-item">
+              <span>3D visulization</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Your submenu title
+              </div>
+              <li class="item">
+                <a href="#">LiDAR Point Cloud</a>
+              </li>
+              <li class="item">
+                <a href="#">Mesh Orthomosaic</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <div class="submenu-item">
+              <span>Esri Cloud Services</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Your submenu title
+              </div>
+              <li class="item">
+                <a href="./ESRIMS">ESRI MultiSpectral</a>
+              </li>
+              <li class="item">
+                <a href="./ESRISense">SenseBox Info</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <a href="#">Teams</a>
+          </li>
+          <li class="item">
+            <a href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <nav class="navbar">
+      <i class="fa-solid fa-bars" id="sidebar-close"></i>
+    </nav>
+
+    <main class="main">
+      
+   <iframe scrolling="no" width="100%" height="100%" margin-top="100px" title="Cyclist Danger Zones" 
+   src="https://tiles.arcgis.com/tiles/W47q82gM5Y2xNen1/arcgis/rest/services/MultiSpectral_ortho_WTL1/MapServer?f=jsapi&cacheKey=a7ddfac49dda9ca0"></iframe>
+
+    
+    </main>
+
+   
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="http://leaflet.calvinmetcalf.com/jam/shp/dist/shp.js"></script>
+    <!-- <script src="/assets/js/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/index.js"></script>
+  </body>
+</html>

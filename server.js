@@ -19,19 +19,38 @@ const pool=require('./database/db');
 
 // Redirect
 app.get('/',function(req,res){
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/index.html');
     //__dirname : It will resolve to your project folder.
   });
-app.get('/twodimension',function(req,res){
-    res.sendFile(__dirname + '/public/twodimension.html');
+app.get('/RGB',function(req,res){
+    res.sendFile(__dirname + '/public/2D/rgb.html');
   });
+app.get('/Multispectral',function(req,res){
+    res.sendFile(__dirname + '/public/2D/ms.html');
+  });
+ app.get('/NDVI',function(req,res){
+    res.sendFile(__dirname + '/public/2D/ndvi.html');
+  });
+ app.get('/LandCover',function(req,res){
+    res.sendFile(__dirname + '/public/2D/lc.html');
+  });
+ app.get('/FlightPath',function(req,res){
+    res.sendFile(__dirname + '/public/2D/flightpath.html');
+  });  
+  app.get('/Thermal',function(req,res){
+    res.sendFile(__dirname + '/public/2D/thermal.html');
+  });    
+
  app.get('/threedimension',function(req,res){
    res.sendFile(__dirname + '/public/threedimension.html');
    //res.sendFile(__dirname+ '/node_modules/potree/examples/shapefiles.html');
 
   }); 
-  app.get('/services',function(req,res){
-    res.sendFile(__dirname + '/public/services.html');
+  app.get('/ESRIMS',function(req,res){
+    res.sendFile(__dirname + '/public/ESRI/ms.html');
+  }); 
+  app.get('/ESRISense',function(req,res){
+    res.sendFile(__dirname + '/public/ESRI/sensebox.html');
   }); 
   //teams  
   app.get('/teams',function(req,res){
@@ -42,7 +61,7 @@ app.get('/twodimension',function(req,res){
     res.sendFile(__dirname + '/public/about.html');
   });
   app.get('/geoserver-proxy', async (req, res) => {
-    const geoserverUrl = 'http://localhost:8080/geoserver/cite/wms' + req.url;
+    const geoserverUrl = 'http://localhost:8080/geoserver/ne/wms' + req.url;
   
     try {
       const response = await axios.get(geoserverUrl, { responseType: 'arraybuffer' });

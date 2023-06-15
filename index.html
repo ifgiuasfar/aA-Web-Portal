@@ -74,6 +74,7 @@
                       </ul>
                       
             </div>
+            
             <div id="body-wrapper" class="d-flex flex-column" style="width: 100%;">
                 <div id="status-wrapper" class="navbar navbar-dark bg-secondary p-0 pe-2">
                     <ul id="status" class="navbar-nav ms-auto flex-grow-1">
@@ -98,9 +99,10 @@
                    
           <div id="content-wrapper" class="container-fluid h-100 p-2"> 
           
-
+            <p>SenseBox Data</p>
             <div id="map"></div>
             <hr>
+            
           <div class="chart-container">
               <div id="chart1"><canvas  class="canvas" width="300" height="200" ></canvas> </div>
                <div id="chart2"><canvas  class="canvas1" width="300" height="200"></canvas></div> 
@@ -174,7 +176,7 @@
   var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Map data © Esri'
   }).addTo(map)
-    var geo = L.geoJson({features:[]}, {
+  var geo = L.geoJson({features:[]}, {
       onEachFeature: function popUp(f, l) {
         var out = [];
         if (f.properties){

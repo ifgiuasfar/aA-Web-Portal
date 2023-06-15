@@ -1,8 +1,4 @@
-#map {
-  height: 50%;
-  width: 100%;
-  z-index: 1;
-}
+
     .chart-container {
     display: flex;
     flex-wrap: wrap;

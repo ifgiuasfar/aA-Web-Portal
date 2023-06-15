@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UAV-Web Portal</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="crossorigin=""/>  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css">
+    <!-- <link rel="stylesheet" href="/assets/css/chartformat.css"> -->
+    <style>
+        #map {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+           
+
+          }
+    </style>
+</head>
+  <body>
+    <nav class="sidebar">
+      <a href="#" class="logo">Web Portal</a>
+
+      <div class="menu-content">
+        <ul class="menu-items">
+          <div class="menu-title"></div>
+
+          <li class="item">
+            <a href="#">Dashboard</a>
+          </li>
+
+          <li class="item">
+            <div class="submenu-item">
+              <span>2D visulization</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+               Back
+              </div>
+              <li class="item">
+                <a href="./RGB">RGB Image</a>
+              </li>
+              <li class="item">
+                <a href="./MultiSpectral">Multspectral</a>
+              </li>
+              <li class="item">
+                <a href="./Thermal">Thermal</a>
+              </li>
+              <li class="item">
+                <a href="./NDVI">NDVI comparsion</a>
+              </li>
+              <li class="item">
+                <a href="./FlightPath">Flight Path</a>
+              </li>
+              <li class="item">
+                <a href="./LandCover">Land Cover</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <div class="submenu-item">
+              <span>3D visulization</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+               Back
+              </div>
+              <li class="item">
+                <a href="./ESRIMS">ESRI MultiSpectral</a>
+              </li>
+              <li class="item">
+                <a href="./ESRISense">SenseBox Info</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <div class="submenu-item">
+              <span>Esri Cloud Services</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+              Back
+              </div>
+              <li class="item">
+                <a href="./ESRIMS">ESRI MultiSpectral</a>
+              </li>
+              <li class="item">
+                <a href="./ESRISense">SenseBox Info</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <a href="#">Teams</a>
+          </li>
+          <li class="item">
+            <a href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <nav class="navbar">
+      <i class="fa-solid fa-bars" id="sidebar-close"></i>
+    </nav>
+
+    <main class="main">
+        <div id="map"></div>
+            
+            
+        
+    
+    </main>
+
+   
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="http://leaflet.calvinmetcalf.com/jam/shp/dist/shp.js"></script>
+    <!-- <script src="/assets/js/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  
+    <script src="./assets/js/script.js"></script>
+   
+  </body>
+</html>
+<script>
+  var map = L.map('map').setView([51.9451804, 7.5720384], 16);
+var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Map data © Esri'
+})
+var streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: 'Map data © OpenStreetMap contributors'
+});
+var cartoPositronLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: 'Map data © CartoDB'
+});
+var stamenTerrainLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
+  attribution: 'Map data © Stamen',
+  subdomains: 'abcd',
+  minZoom: 0,
+  maxZoom: 18,
+  ext: 'png'
+});
+var googleRoadmapLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+  attribution: 'Map data © Google Maps',
+  maxZoom: 20,
+  subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+});
+
+var basemaplayers={
+    'Satellite':satellite,
+    'StreetMap':streetMap,
+    'CartoPositron layer':cartoPositronLayer,
+    'Topographic Terrain Layer':stamenTerrainLayer,
+    'Google Road layer':googleRoadmapLayer
+}
+L.control.layers(basemaplayers).addTo(map);
+
+satellite.addTo(map)
+
+  var geo = L.geoJson({features:[]}, {
+    onEachFeature: function popUp(f, l) {
+      var out = [];
+      if (f.properties){
+        for(var key in f.properties){
+          out.push(key + ": " + f.properties[key]);
+        }
+        l.bindPopup(out.join("<br />"));
+      }
+    }
+  }).addTo(map);
+
+  var base = "./data/ffpp.shp";
+  shp(base).then(function(data){
+    geo.addData(data);
+  });
+ 
+</script>

@@ -49,7 +49,7 @@ map.on('draw:created', function (e) {
   
     drawnItems.addLayer(layer);
 });
-rgb=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
+const rgb=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
     layers: 'cite:Aa_2022_RGB',
     transparent:true,
      opacity:0.5,
@@ -59,15 +59,15 @@ rgb=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
 });
 
 
-ms=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
-    layers: 'cite:Orthomosaic_Multispectral',
+const ms=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
+    layers:'ne:ms_2023',
     transparent:true,
-    //opacity:0.4,
+    opacity:0.4,
     maxZoom: 20,
     zIndex:400,
     maxNativeZoom: 18,
    format: 'image/png',   
-});
+}).addTo(map);
 
 const imageUrl= './data/omms.jpg';
 const bounds = [[51.943590542913974, 7.570063780490534], [51.946771055703981,  7.574740819568534]];
@@ -75,7 +75,7 @@ var msa = L.imageOverlay(imageUrl, bounds, {
   opacity:0.5,
   alt: 'My Layer',
   interactive: true
-}).addTo(map);
+});
 
 
 
