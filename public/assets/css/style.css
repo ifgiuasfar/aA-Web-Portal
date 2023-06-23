@@ -11,9 +11,9 @@
 .sidebar {
   position: fixed;
   height: 100%;
-  width: 260px;
-  background: #d2d1d6;
-  padding: 15px;
+  width: 240px;
+  background: #047853;
+  padding:15px;
   z-index: 99;
 }
 .logo {
@@ -77,7 +77,7 @@
   top: 0;
   right: calc(-100% - 26px);
   height: calc(100% + 100vh);
-  background: #2717dc;
+  background: #047853;
   display: none;
 }
 .show-submenu ~ .submenu {
@@ -92,8 +92,8 @@
 }
 .navbar,
 .main {
-  left: 260px;
-  width: calc(100% - 260px);
+  left: 240px;
+  width: calc(100% - 240px);
   transition: all 0.5s ease;
   z-index: 1000;
 }
@@ -107,7 +107,7 @@
   color: #fff;
   padding: 8px 15px;
   font-size: 15px;
-  background: #dadadf;
+  background: #047853;
   cursor: pointer;
 
 }
@@ -149,7 +149,21 @@
   border-radius: 5px;
   font-size: 14px;
 }
-
+#export-btn {
+  display: block;
+  margin-bottom: 5px; /* Adjust the button spacing as needed */
+  padding: 10px 15px;
+  background-color: #f44040;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+}
+a.navbar-brand img {      
+  width: 150px;
+height: 100px ;
+  border-radius: 50px;
+}
 
 /* ------------------------Services---------------------- */
 #services{

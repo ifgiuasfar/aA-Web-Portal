@@ -27,8 +27,10 @@
 </head>
   <body>
     <nav class="sidebar">
-      <a href="#" class="logo">Web Portal</a>
-
+      <a  href="./" class="navbar-brand logo">
+        <img src="./data/logo.jpg" alt="logo">
+        Web-portal
+    </a>
       <div class="menu-content">
         <ul class="menu-items">
           <div class="menu-title"></div>
@@ -46,7 +48,7 @@
             <ul class="menu-items submenu">
               <div class="menu-title">
                 <i class="fa-solid fa-chevron-left"></i>
-                Your submenu title
+                Back
               </div>
               <li class="item">
                 <a href="./RGB">RGB Image</a>
@@ -54,9 +56,7 @@
               <li class="item">
                 <a href="./MultiSpectral">Multspectral</a>
               </li>
-              <li class="item">
-                <a href="./Thermal">Thermal</a>
-              </li>
+             
               <li class="item">
                 <a href="./NDVI">NDVI comparsion</a>
               </li>
@@ -77,10 +77,10 @@
             <ul class="menu-items submenu">
               <div class="menu-title">
                 <i class="fa-solid fa-chevron-left"></i>
-                Your submenu title
+               Back
               </div>
               <li class="item">
-                <a href="#">LiDAR Point Cloud</a>
+                <a href="./pointcloud">LiDAR Point Cloud</a>
               </li>
               <li class="item">
                 <a href="#">Mesh Orthomosaic</a>
@@ -96,13 +96,13 @@
             <ul class="menu-items submenu">
               <div class="menu-title">
                 <i class="fa-solid fa-chevron-left"></i>
-                Your submenu title
+                Back
               </div>
               <li class="item">
-                <a href="#">LiDAR Point Cloud</a>
+                <a href="./ESRIMS">ESRI MultiSpectral</a>
               </li>
               <li class="item">
-                <a href="#">Mesh Orthomosaic</a>
+                <a href="./ESRISense">SenseBox Info</a>
               </li>
             </ul>
           </li>
@@ -124,7 +124,7 @@
         <div id="map"></div>
             
             
-        <div class="controls">
+        <!-- <div class="controls">
           <h5 style="color:lightgrey; font-family: cursive;">WMS Layers:</h5>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="layerRadio" id="rgb" value="rgb">
@@ -142,7 +142,7 @@
           <div class="transparency-control">
             <input type="range" id="transparency-slider" min="0" max="100" value="100" step="1">
           </div>
-        </div>
+        </div> -->
     
     </main>
 

@@ -1,4 +1,4 @@
-var map = L.map('map').setView([51.9451804, 7.5720384], 16);
+var map = L.map('map').setView([51.9451804, 7.5720384], 12);
 var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Map data © Esri'
 })
@@ -47,5 +47,7 @@ var geo = L.geoJson({features:[]}, {
   var base = './data/SenseBoxData.zip';
   shp(base).then(function(data){
     geo.addData(data);
+    map.flyTo(geo.getBounds().getCenter(), 16);
+
   });
  

@@ -41,8 +41,8 @@ app.get('/Multispectral',function(req,res){
     res.sendFile(__dirname + '/public/2D/thermal.html');
   });    
 
- app.get('/threedimension',function(req,res){
-   res.sendFile(__dirname + '/public/threedimension.html');
+ app.get('/pointcloud',function(req,res){
+   res.sendFile(__dirname + '/public/pointcloud2023.html');
    //res.sendFile(__dirname+ '/node_modules/potree/examples/shapefiles.html');
 
   }); 

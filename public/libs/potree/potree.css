@@ -58,9 +58,9 @@
 	height:		100%;
 	overflow-y:	scroll;
 	font-size:	85%;
-	border-left:	1px solid black;
+	border-right:	1px solid black;
 	background-color:	var(--bg-color);
-	}
+}
 
 #sidebar_root{
 	color:				var(--font-color);

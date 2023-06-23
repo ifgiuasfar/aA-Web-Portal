@@ -26,14 +26,16 @@
 </head>
   <body>
     <nav class="sidebar">
-      <a href="#" class="logo">Web Portal</a>
-
+      <a  href="./" class="navbar-brand logo">
+        <img src="./data/logo.jpg" alt="logo">
+        web-portal
+    </a>
       <div class="menu-content">
         <ul class="menu-items">
           <div class="menu-title"></div>
 
           <li class="item">
-            <a href="#">Dashboard</a>
+            <a href="./">Dashboard</a>
           </li>
 
           <li class="item">
@@ -53,9 +55,7 @@
               <li class="item">
                 <a href="./MultiSpectral">Multspectral</a>
               </li>
-              <li class="item">
-                <a href="./Thermal">Thermal</a>
-              </li>
+            
               <li class="item">
                 <a href="./NDVI">NDVI comparsion</a>
               </li>
@@ -139,7 +139,7 @@
   </body>
 </html>
 <script>
-  var map = L.map('map').setView([51.9451804, 7.5720384], 16);
+var map = L.map('map').setView([51.9451804, 7.5720384], 15);
 var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Map data © Esri'
 })
@@ -183,9 +183,11 @@ satellite.addTo(map)
         l.bindPopup(out.join("<br />"));
       }
     }
-  }).addTo(map);
+  })
+  
+  geo.addTo(map);
 
-  var base = "./data/ffpp.shp";
+  var base = "./data/ffpp/new.zip";
   shp(base).then(function(data){
     geo.addData(data);
   });

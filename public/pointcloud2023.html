@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UAV web-portal</title>
+    <link rel="icon" href="./data/logo.jpg " type="image/png">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+
+	<link rel="stylesheet" type="text/css" href="./libs/potree/potree.css">
+	<link rel="stylesheet" type="text/css" href="./libs/jquery-ui/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="./libs/openlayers3/ol.css">
+	<link rel="stylesheet" type="text/css" href="./libs/spectrum/spectrum.css">
+	<link rel="stylesheet" type="text/css" href="./libs/jstree/themes/mixed/style.css">
+</head>
+
+<body>
+	<nav class="sidebar">
+		<!-- <a href="#" class="logo"></a> -->
+		<a  href="#" class="navbar-brand logo">
+		  <img src="./data/logo.jpg" alt="logo">
+		  web-portal
+	  </a>
+		<div class="menu-content">
+		  <ul class="menu-items">
+			<!-- <div class="menu-title"></div> -->
+  
+			<li class="item">
+			  <a href="./">Dashboard</a>
+			</li>
+  
+			<li class="item">
+			  <div class="submenu-item">
+				<span>2D visulization</span>
+				<i class="fa-solid fa-chevron-right"></i>
+			  </div>
+  
+			  <ul class="menu-items submenu">
+				<div class="menu-title">
+				  <i class="fa-solid fa-chevron-left"></i>
+				  Back
+				</div>
+				<li class="item">
+				  <a href="./RGB">RGB Image</a>
+				</li>
+				<li class="item">
+				  <a href="./MultiSpectral">Multspectral</a>
+				</li>
+				<li class="item">
+				  <a href="./Thermal">Thermal</a>
+				</li>
+				<li class="item">
+				  <a href="./NDVI">NDVI comparsion</a>
+				</li>
+				<li class="item">
+				  <a href="./Flightpath">Flight Path</a>
+				</li>
+				<li class="item">
+				  <a href="./LandCover">Land Cover</a>
+				</li>
+			  </ul>
+			</li>
+			<li class="item">
+			  <div class="submenu-item">
+				<span>3D visulization</span>
+				<i class="fa-solid fa-chevron-right"></i>
+			  </div>
+  
+			  <ul class="menu-items submenu">
+				<div class="menu-title">
+				  <i class="fa-solid fa-chevron-left"></i>
+				  Back
+				</div>
+				<li class="item">
+				  <a href="./threedimension">LiDAR Point Cloud</a>
+				</li>
+				<li class="item">
+				  <a href="#">Mesh Orthomosaic</a>
+				</li>
+			  </ul>
+			</li>
+			<li class="item">
+			  <div class="submenu-item">
+				<span>Esri Cloud Services</span>
+				<i class="fa-solid fa-chevron-right"></i>
+			  </div>
+  
+			  <ul class="menu-items submenu">
+				<div class="menu-title">
+				  <i class="fa-solid fa-chevron-left"></i>
+				  Back
+				</div>
+				<li class="item">
+				  <a href="./ESRIMS">MultiSpectral</a>
+				</li>
+				<li class="item">
+				  <a href="./ESRISense">SenseBox Info</a>
+				</li>
+			  </ul>
+			</li>
+			<li class="item">
+			  <a href="#">Teams</a>
+			</li>
+			<li class="item">
+			  <a href="#">About</a>
+			</li>
+		  </ul>
+		</div>
+	  </nav>
+  
+	  <nav class="navbar">
+		<i class="fa-solid fa-bars" id="sidebar-close"></i>
+	  </nav>
+  
+	  <main class="main">
+		 
+		  
+		
+	<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
+	<script src="./libs/spectrum/spectrum.js"></script>
+	<script src="./libs/jquery-ui/jquery-ui.min.js"></script>
+	<script src="./libs/other/BinaryHeap.js"></script>
+	<script src="./libs/tween/tween.min.js"></script>
+	<script src="./libs/d3/d3.js"></script>
+	<script src="./libs/proj4/proj4.js"></script>
+	<script src="./libs/openlayers3/ol.js"></script>
+	<script src="./libs/i18next/i18next.js"></script>
+	<script src="./libs/jstree/jstree.js"></script>
+	<script src="./libs/potree/potree.js"></script>
+	<script src="./libs/plasio/js/laslaz.js"></script>
+	
+	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
+	<!-- INCLUDE SETTINGS HERE -->
+	
+	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
+		<div id="potree_render_area" style="background-image: url('../build/potree/resources/images/background.jpg');"></div>
+		<div id="potree_sidebar_container"> </div>
+	</div>
+	</main>
+	<script>
+	
+		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
+		
+		viewer.setEDLEnabled(true);
+		viewer.setFOV(60);
+		viewer.setPointBudget(2_000_000);
+		<!-- INCLUDE SETTINGS HERE -->
+		viewer.loadSettingsFromURL();
+		
+		viewer.setDescription("");
+		
+		viewer.loadGUI(() => {
+			viewer.setLanguage('en');
+			$("#menu_appearance").next().show();
+			$("#menu_tools").next().show();
+			$("#menu_clipping").next().show();
+			viewer.toggleSidebar();
+		});
+		
+		
+
+		Potree.loadPointCloud("./pointclouds/pointcloud2023/metadata.json", "pointcloud2023", e => {
+			let scene = viewer.scene;
+			let pointcloud = e.pointcloud;
+			
+			let material = pointcloud.material;
+			material.size = 1;
+			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
+			material.shape = Potree.PointShape.SQUARE;
+			material.activeAttributeName = "rgba";
+			
+			scene.addPointCloud(pointcloud);
+			
+			viewer.fitToScreen();
+		});
+
+		
+		
+	</script>
+	<script src="./assets/js/script.js"></script>
+    <script src="./assets/js/index.js"></script>
+	
+  </body>
+</html>

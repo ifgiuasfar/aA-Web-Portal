@@ -58,11 +58,10 @@ const rgb=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
    format: 'image/png',   
 });
 
-
 const ms=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
     layers:'ne:ms_2023',
     transparent:true,
-    opacity:0.4,
+    opacity:0.8,
     maxZoom: 20,
     zIndex:400,
     maxNativeZoom: 18,
