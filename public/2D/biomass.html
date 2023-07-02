@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UAV-Web Portal</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="crossorigin=""/>  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css">
+    <!-- <link rel="stylesheet" href="/assets/css/chartformat.css"> -->
+    <style>
+        #map {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+           
+
+          }
+          #slider-container {
+            position: absolute;
+            top: 400px;
+            left: 10px;
+            width: 200px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+          }
+          
+          #slider-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+          
+          #transparency-slider {
+            width: 100%;
+          }
+    </style>
+</head>
+  <body>
+    <nav class="sidebar">
+      <a  href="./" class="navbar-brand logo">
+        <img src="./data/logo.jpg" alt="logo">
+        
+    </a>
+      <div class="menu-content">
+        <ul class="menu-items">
+          <div class="menu-title"></div>
+
+          <li class="item">
+            <a href="./">Dashboard</a>
+          </li>
+
+          <li class="item">
+            <div class="submenu-item">
+              <span>2D visulization</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Back
+              </div>
+              <li class="item">
+                <a href="./RGB">RGB Image</a>
+              </li>
+              <li class="item">
+                <a href="./MultiSpectral">Multspectral</a>
+              </li>
+             
+              <li class="item">
+                <a href="./NDVI">NDVI comparsion</a>
+              </li>
+              <li class="item">
+                <a href="./FlightPath">Flight Path</a>
+              </li>
+              <li class="item">
+                <a href="./LandCover">Land Cover</a>
+              </li>
+              <li class="item">
+                <a href="./biomass">Biomass</a>
+              </li>
+              <li class="item">
+                <a href="./DEM">DEM</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <div class="submenu-item">
+              <span>3D visulization</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Back
+              </div>
+              <li class="item">
+                <a href="./threedimension">LiDAR Point Cloud</a>
+              </li>
+              <li class="item">
+                <a href="#">Mesh Orthomosaic</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <div class="submenu-item">
+              <span>Esri Cloud Services</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Back
+              </div>
+              <li class="item">
+                <a href="./ESRIMS">LiDAR Point Cloud</a>
+              </li>
+              <li class="item">
+                <a href="./ESRISense">Mesh Orthomosaic</a>
+              </li>
+            </ul>
+          </li>
+          <li class="item">
+            <a href="/teams">Teams</a>
+          </li>
+          <li class="item">
+            <a href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <nav class="navbar">
+      <i class="fa-solid fa-bars" id="sidebar-close"></i>
+    </nav>
+
+    <main class="main">
+        <div id="map"></div>
+            <!-- <div id="legend">
+              <img src="http://localhost:8080/geoserver/web/wicket/bookmarkable/org.geoserver.wms.web.data.StyleEditPage?93-IResourceListener-styleForm-context-panel-legendContainer-legendImg&name=2020_NDVI&antiCache=1688115111125" alt="">
+            </div> -->
+        <div id="slider-container">
+          <label for="J">NDVI 2020 vs 2023</label>
+          <input type="range" id="transparency-slider" min="0" max="100" value="50">
+        </div>    
+        
+    
+    </main>
+
+   
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="http://leaflet.calvinmetcalf.com/jam/shp/dist/shp.js"></script>
+    <!-- <script src="/assets/js/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <!-- <script src="./assets/js/main.js" ></script> -->
+    <script src="./assets/js/script.js"></script>
+    <!-- <script src="./assets/js/index.js"></script> -->
+  </body>
+</html>
+<script>
+  var map = L.map('map').setView([51.9451804, 7.5720384], 18);
+
+var streets= L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+})
+var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Map data © Esri'
+});
+var basemaps = {
+    'Satellite': satellite,
+    'Streets': streets,
+  
+  };
+L.control.layers(basemaps).addTo(map);
+satellite.addTo(map); // Set a default basemap layer
+L.control.scale({metric:true}).addTo(map);
+
+const biomass=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2023_Biomass',
+  transparent:true,
+  // opacity:0.5,
+  maxZoom: 20,
+  maxNativeZoom: 18,
+ format: 'image/png',  
+
+}).addTo(map)
+
+var ndvilegend = L.control({position: 'bottomright'});
+ndvilegend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'info legend');
+      div.innerHTML +=
+      '<img src="http://localhost:8080/geoserver/web/wicket/bookmarkable/org.geoserver.wms.web.data.StyleEditPage?93-IResourceListener-styleForm-context-panel-legendContainer-legendImg&name=2020_NDVI&antiCache=1688115590095" alt="legend" width="70" height="100">';
+  return div;
+  };
+  ndvilegend.addTo(map);
+
+
+// Create a feature group to store the drawn markers
+var drawnItems = new L.FeatureGroup().addTo(map);
+
+// Initialize the Leaflet Draw control with localStorage support
+var drawControl = new L.Control.Draw({
+  edit: {
+    featureGroup: drawnItems
+  },
+  draw: {
+    marker: {
+      localStorage: true
+    }
+  }
+}).addTo(map);
+
+// Event listener for when a shape is created
+map.on(L.Draw.Event.CREATED, function (e) {
+  var layer = e.layer;
+  drawnItems.addLayer(layer);
+
+  if (layer instanceof L.Marker) {
+    // Handle marker creation
+    var text = prompt('Enter text for the marker:');
+    if (text !== null) {
+      layer.bindPopup(text);
+    }
+  } else if (layer instanceof L.Rectangle) {
+    // Handle rectangle creation
+    var text = prompt('Enter text for the rectangle:');
+    if (text !== null) {
+      layer.bindPopup(text);
+    }
+  } else if (layer instanceof L.Circle) {
+    // Handle circle creation
+    var text = prompt('Enter text for the circle:');
+    if (text !== null) {
+      layer.bindPopup(text);
+    }
+  }
+});
+// Save drawn items to localStorage
+function saveDrawnItems() {
+  var data = drawnItems.toGeoJSON();
+  localStorage.setItem('drawnItems', JSON.stringify(data));
+}
+
+// Load drawn items from localStorage
+function loadDrawnItems() {
+  var data = localStorage.getItem('drawnItems');
+  if (data) {
+    var items = L.geoJSON(JSON.parse(data));
+    drawnItems.addLayer(items);
+  }
+}
+
+// Call the function to load drawn items on page load
+loadDrawnItems();
+// Event listener for when a shape is edited
+map.on(L.Draw.Event.EDITED, function (e) {
+  saveDrawnItems();
+});
+
+//exporting the data
+document.getElementById('export-btn').addEventListener('click', exportMarkers);
+function exportMarkers() {
+  // Get the GeoJSON representation of the drawn items
+  var geojson = drawnItems.toGeoJSON();
+
+  // Convert the GeoJSON to a downloadable file
+  var dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(geojson));
+  var downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute('href', dataStr);
+  downloadAnchor.setAttribute('download', 'markers.geojson');
+  downloadAnchor.click();
+}
+
+
+
+</script>

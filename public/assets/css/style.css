@@ -162,7 +162,24 @@
 a.navbar-brand img {      
   width: 150px;
 height: 100px ;
-  border-radius: 50px;
+  border-radius: 10px;
+}
+#import-container {
+  position: absolute;
+  top: 50px;
+  left: 2px;
+  z-index: 1000;
+}
+
+#import-button {
+  display: block;
+  margin-bottom: 5px; /* Adjust the button spacing as needed */
+  padding: 10px 15px;
+  background-color: #4070f4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 /* ------------------------Services---------------------- */

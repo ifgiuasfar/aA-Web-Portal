@@ -2,10 +2,12 @@
     .chart-container {
     display: flex;
     flex-wrap: wrap;
-    margin: 10px;
+   
+    z-index: 400;
+    margin-top: 400px;
   }
 
     .chart-container canvas {
-    width: 50%; /* Adjust the width as needed */
+    width: 20%; /* Adjust the width as needed */
     height: 50%;
   }

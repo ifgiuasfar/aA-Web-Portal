@@ -23,13 +23,33 @@
            
 
           }
+          #slider-container {
+            position: absolute;
+            top: 400px;
+            left: 10px;
+            width: 200px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+          }
+          
+          #slider-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+          
+          #transparency-slider {
+            width: 100%;
+          }
     </style>
 </head>
   <body>
     <nav class="sidebar">
       <a  href="./" class="navbar-brand logo">
         <img src="./data/logo.jpg" alt="logo">
-        web-portal
+        
     </a>
       <div class="menu-content">
         <ul class="menu-items">
@@ -48,7 +68,7 @@
             <ul class="menu-items submenu">
               <div class="menu-title">
                 <i class="fa-solid fa-chevron-left"></i>
-                Your submenu title
+                Back
               </div>
               <li class="item">
                 <a href="./RGB">RGB Image</a>
@@ -65,6 +85,12 @@
               </li>
               <li class="item">
                 <a href="./LandCover">Land Cover</a>
+              </li>
+              <li class="item">
+                <a href="./biomass">Biomass</a>
+              </li>
+              <li class="item">
+                <a href="./DEM">DEM</a>
               </li>
             </ul>
           </li>
@@ -107,10 +133,10 @@
             </ul>
           </li>
           <li class="item">
-            <a href="#">Teams</a>
+            <a href="/teams">Teams</a>
           </li>
           <li class="item">
-            <a href="#">About</a>
+            <a href="/about">About</a>
           </li>
         </ul>
       </div>
@@ -122,27 +148,12 @@
 
     <main class="main">
         <div id="map"></div>
+        <div id="slider-container">
+          <label for="J">LULC 2018 vs 2023</label>
+          <input type="range" id="transparency-slider" min="0" max="100" value="50">
+        </div>
             
-            
-        <!-- <div class="controls">
-          <h5 style="color:lightgrey; font-family: cursive;">WMS Layers:</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="rgb" value="rgb">
-            <label class="form-check-label" for="rgb" style="color:lightblue">RGB Image</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="multispectral" value="multispectral" checked>
-            <label class="form-check-label" for="multispectral" style="color:lightblue">Multispectral</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="ms" value="ms" checked>
-            <label class="form-check-label" for="ms" style="color:lightblue">Sample Multispectral</label>
-          </div>
-          <p style="color:lightblue;font-family: cursive;">Opacity:</p>
-          <div class="transparency-control">
-            <input type="range" id="transparency-slider" min="0" max="100" value="100" step="1">
-          </div>
-        </div> -->
+      
     
     </main>
 
@@ -151,9 +162,11 @@
     <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
     <!-- <script src="http://leaflet.calvinmetcalf.com/jam/shp/dist/shp.js"></script> -->
     <!-- <script src="/assets/js/chart.js"></script>
+      
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
     <!-- <script src="./assets/js/main.js" ></script> -->
     <script src="./assets/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- <script src="./assets/js/index.js"></script> -->
   </body>
 </html>
@@ -175,14 +188,44 @@ L.control.layers(basemaps).addTo(map);
 satellite.addTo(map); // Set a default basemap layer
 L.control.scale({metric:true}).addTo(map);
 
-const ndvi=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
-  layers: 'ne:Rendered_LULC_2023',
+const lc=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2018_LULC',
   transparent:true,
-   opacity:0.5,
+  // opacity:0.5,
+  maxZoom: 20,
+  maxNativeZoom: 18,
+ format: 'image/png',  
+
+})
+const lc11=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2023_LULC',
+  transparent:true,
+   //opacity:0.5,
   maxZoom: 20,
   maxNativeZoom: 18,
  format: 'image/png',   
-}).addTo(map);
+ 
+})
+
+lc.addTo(map); // Add the first layer directly to the map
+lc11.addTo(map); // Add the second layer directly to the map
+var ndvilegend = L.control({position: 'bottomright'});
+
+ndvilegend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'info legend');
+      div.innerHTML +=
+      '<img src="http://giv-project2.uni-muenster.de:8080/geoserver/web/wicket/bookmarkable/org.geoserver.wms.web.data.StyleEditPage?13-IResourceListener-styleForm-context-panel-legendContainer-legendImg&name=LULC&workspace=Web_Portal&antiCache=1688309554849" alt="legend" width="70" height="100">';
+  return div;
+  };
+  ndvilegend.addTo(map);
+
+
+var  transparent_slider=document.getElementById('transparency-slider')
+transparent_slider.addEventListener('input',function(){
+  var opacity= this.value/100;
+  var activelayer=map.hasLayer(lc)?lc11:lc;
+  activelayer.setOpacity(opacity);
+})
 
 // Create a feature group to store the drawn markers
 var drawnItems = new L.FeatureGroup().addTo(map);
@@ -259,6 +302,7 @@ function exportMarkers() {
   downloadAnchor.setAttribute('download', 'markers.geojson');
   downloadAnchor.click();
 }
+
 
 
 

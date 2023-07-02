@@ -37,9 +37,12 @@ app.get('/Multispectral',function(req,res){
  app.get('/FlightPath',function(req,res){
     res.sendFile(__dirname + '/public/2D/flightpath.html');
   });  
-  app.get('/Thermal',function(req,res){
-    res.sendFile(__dirname + '/public/2D/thermal.html');
-  });    
+  app.get('/biomass',function(req,res){
+    res.sendFile(__dirname + '/public/2D/biomass.html');
+  });  
+  app.get('/DEM',function(req,res){
+    res.sendFile(__dirname + '/public/2D/DEM.html');
+  }); 
 
  app.get('/pointcloud',function(req,res){
    res.sendFile(__dirname + '/public/pointcloud2023.html');
@@ -56,12 +59,13 @@ app.get('/Multispectral',function(req,res){
   app.get('/teams',function(req,res){
     res.sendFile(__dirname + '/public/teams.html');
   });
+ 
   //about
   app.get('/about',function(req,res){
     res.sendFile(__dirname + '/public/about.html');
   });
   app.get('/geoserver-proxy', async (req, res) => {
-    const geoserverUrl = 'http://localhost:8080/geoserver/ne/wms' + req.url;
+    const geoserverUrl = 'http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms' + req.url;
   
     try {
       const response = await axios.get(geoserverUrl, { responseType: 'arraybuffer' });
@@ -77,7 +81,7 @@ app.use("/data",require("./routes/routes"))
 
 const port = process.env.PORT || 9000;
 app.listen(port,()=>{
-    console.log("server started  on port "+ port );
+    console.log("Server started  on port "+ port + "localhost:9000/" );
 });
 // Error handling middleware
 app.use(function(err, req, res, next) {

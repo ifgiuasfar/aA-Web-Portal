@@ -23,13 +23,33 @@
            
 
           }
+          #slider-container {
+            position: absolute;
+            top: 400px;
+            left: 10px;
+            width: 200px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+          }
+          
+          #slider-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+          
+          #transparency-slider {
+            width: 100%;
+          }
     </style>
 </head>
   <body>
     <nav class="sidebar">
       <a  href="./" class="navbar-brand logo">
         <img src="./data/logo.jpg" alt="logo">
-        Web-portal
+       
     </a>
       <div class="menu-content">
         <ul class="menu-items">
@@ -65,6 +85,12 @@
               </li>
               <li class="item">
                 <a href="./LandCover">Land Cover</a>
+              </li>
+              <li class="item">
+                <a href="./biomass">Biomass</a>
+              </li>
+              <li class="item">
+                <a href="./DEM">DEM</a>
               </li>
             </ul>
           </li>
@@ -107,10 +133,10 @@
             </ul>
           </li>
           <li class="item">
-            <a href="#">Teams</a>
+            <a href="/teams">Teams</a>
           </li>
           <li class="item">
-            <a href="#">About</a>
+            <a href="/about">About</a>
           </li>
         </ul>
       </div>
@@ -122,27 +148,15 @@
 
     <main class="main">
         <div id="map"></div>
+        <div id="legend" style="Z-index: 400px;position: absolute; ">
+          <img src="http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=TRY:2020_NDVI">
+   </div>
+  <div id="slider-container">
+    <label for="J">MultiSpectral 2020 vs 2023</label>
+    <input type="range" id="transparency-slider" min="0" max="100" value="50">
+  </div>
             
-            
-        <!-- <div class="controls">
-          <h5 style="color:lightgrey; font-family: cursive;">WMS Layers:</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="rgb" value="rgb">
-            <label class="form-check-label" for="rgb" style="color:lightblue">RGB Image</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="multispectral" value="multispectral" checked>
-            <label class="form-check-label" for="multispectral" style="color:lightblue">Multispectral</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="ms" value="ms" checked>
-            <label class="form-check-label" for="ms" style="color:lightblue">Sample Multispectral</label>
-          </div>
-          <p style="color:lightblue;font-family: cursive;">Opacity:</p>
-          <div class="transparency-control">
-            <input type="range" id="transparency-slider" min="0" max="100" value="100" step="1">
-          </div>
-        </div> -->
+        
     
     </main>
 

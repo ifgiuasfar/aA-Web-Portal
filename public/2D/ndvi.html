@@ -23,6 +23,26 @@
            
 
           }
+          #slider-container {
+            position: absolute;
+            top: 400px;
+            left: 10px;
+            width: 200px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+          }
+          
+          #slider-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+          
+          #transparency-slider {
+            width: 100%;
+          }
     </style>
 </head>
   <body>
@@ -66,6 +86,12 @@
               <li class="item">
                 <a href="./LandCover">Land Cover</a>
               </li>
+              <li class="item">
+                <a href="./biomass">Biomass</a>
+              </li>
+              <li class="item">
+                <a href="./DEM">DEM</a>
+              </li>
             </ul>
           </li>
           <li class="item">
@@ -77,7 +103,7 @@
             <ul class="menu-items submenu">
               <div class="menu-title">
                 <i class="fa-solid fa-chevron-left"></i>
-                Your submenu title
+                Back
               </div>
               <li class="item">
                 <a href="./threedimension">LiDAR Point Cloud</a>
@@ -96,7 +122,7 @@
             <ul class="menu-items submenu">
               <div class="menu-title">
                 <i class="fa-solid fa-chevron-left"></i>
-                Your submenu title
+                Back
               </div>
               <li class="item">
                 <a href="./ESRIMS">LiDAR Point Cloud</a>
@@ -107,10 +133,10 @@
             </ul>
           </li>
           <li class="item">
-            <a href="#">Teams</a>
+            <a href="/teams">Teams</a>
           </li>
           <li class="item">
-            <a href="#">About</a>
+            <a href="/about">About</a>
           </li>
         </ul>
       </div>
@@ -122,27 +148,14 @@
 
     <main class="main">
         <div id="map"></div>
-            
-            
-        <!-- <div class="controls">
-          <h5 style="color:lightgrey; font-family: cursive;">WMS Layers:</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="rgb" value="rgb">
-            <label class="form-check-label" for="rgb" style="color:lightblue">RGB Image</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="multispectral" value="multispectral" checked>
-            <label class="form-check-label" for="multispectral" style="color:lightblue">Multispectral</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="ms" value="ms" checked>
-            <label class="form-check-label" for="ms" style="color:lightblue">Sample Multispectral</label>
-          </div>
-          <p style="color:lightblue;font-family: cursive;">Opacity:</p>
-          <div class="transparency-control">
-            <input type="range" id="transparency-slider" min="0" max="100" value="100" step="1">
-          </div>
-        </div> -->
+            <!-- <div id="legend">
+              <img src="http://localhost:8080/geoserver/web/wicket/bookmarkable/org.geoserver.wms.web.data.StyleEditPage?93-IResourceListener-styleForm-context-panel-legendContainer-legendImg&name=2020_NDVI&antiCache=1688115111125" alt="">
+            </div> -->
+        <div id="slider-container">
+          <label for="J">NDVI 2020 vs 2023</label>
+          <input type="range" id="transparency-slider" min="0" max="100" value="50">
+        </div>    
+        
     
     </main>
 
@@ -175,14 +188,44 @@ L.control.layers(basemaps).addTo(map);
 satellite.addTo(map); // Set a default basemap layer
 L.control.scale({metric:true}).addTo(map);
 
-const ndvi=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
-  layers: '	ne:Rendered_NDVI_2023',
+const ndvi=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2020_NDVI',
   transparent:true,
-   opacity:0.5,
+  // opacity:0.5,
+  maxZoom: 20,
+  maxNativeZoom: 18,
+ format: 'image/png',  
+
+})
+const ndvi1=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2023_NDVI',
+  transparent:true,
+   //opacity:0.5,
   maxZoom: 20,
   maxNativeZoom: 18,
  format: 'image/png',   
-}).addTo(map);
+ 
+})
+ndvi.addTo(map); // Add the first layer directly to the map
+ndvi1.addTo(map); // Add the second layer directly to the map
+
+
+
+var  transparent_slider=document.getElementById('transparency-slider')
+transparent_slider.addEventListener('input',function(){
+  var opacity= this.value/100;
+  var activelayer=map.hasLayer(ndvi)?ndvi1:ndvi1;
+  activelayer.setOpacity(opacity);
+})
+var ndvilegend = L.control({position: 'bottomright'});
+ndvilegend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'info legend');
+      div.innerHTML +=
+      '<img src="http://giv-project2.uni-muenster.de:8080/geoserver/web/wicket/bookmarkable/org.geoserver.wms.web.data.StyleEditPage?2-IResourceListener-styleForm-context-panel-legendContainer-legendImg&name=2023_NDVI&workspace=Web_Portal&antiCache=1688251887157" alt="legend" width="70" height="100">';
+  return div;
+  };
+  ndvilegend.addTo(map);
+
 
 // Create a feature group to store the drawn markers
 var drawnItems = new L.FeatureGroup().addTo(map);

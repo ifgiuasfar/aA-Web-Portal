@@ -23,6 +23,29 @@
            
 
           }
+         
+#slider-container {
+  position: absolute;
+  top: 400px;
+  left: 10px;
+  width: 200px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+#slider-container label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#transparency-slider {
+  width: 100%;
+}
+        
+          
     </style>
 </head>
   <body>
@@ -66,6 +89,12 @@
               <li class="item">
                 <a href="./LandCover">Land Cover</a>
               </li>
+              <li class="item">
+                <a href="./biomass">Biomass</a>
+              </li>
+              <li class="item">
+                <a href="./DEM">DEM</a>
+              </li>
             </ul>
           </li>
           <li class="item">
@@ -80,7 +109,7 @@
                Back
               </div>
               <li class="item">
-                <a href="./threedimension">LiDAR Point Cloud</a>
+                <a href="./pointcloud">LiDAR Point Cloud</a>
               </li>
               <li class="item">
                 <a href="#">Mesh Orthomosaic</a>
@@ -107,10 +136,10 @@
             </ul>
           </li>
           <li class="item">
-            <a href="#">Teams</a>
+            <a href="./teams">Teams</a>
           </li>
           <li class="item">
-            <a href="#">About</a>
+            <a href="./about">About</a>
           </li>
         </ul>
       </div>
@@ -122,31 +151,22 @@
 
     <main class="main">
         <div id="map"></div>
+        <div id="slider-container">
+          <label for="J">RGB 2020 vs 2023</label>
+          <input type="range" id="transparency-slider" min="0" max="100" value="50">
+        </div>
         
+
         <div id="buttonContainer">
-          <button id="import">Import</button>
+          <div id="import-container">
+            <input type="file" id="file-input" accept=".geojson" style="display: none;" />
+            <button id="import-button">Import</button>
+          </div>
+
           <button id="export-btn" >Export </button>
         </div>
             
-        <!-- <div class="controls">
-          <h5 style="color:lightgrey; font-family: cursive;">WMS Layers:</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="rgb" value="rgb">
-            <label class="form-check-label" for="rgb" style="color:lightblue">RGB Image</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="multispectral" value="multispectral" checked>
-            <label class="form-check-label" for="multispectral" style="color:lightblue">Multispectral</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="layerRadio" id="ms" value="ms" checked>
-            <label class="form-check-label" for="ms" style="color:lightblue">Sample Multispectral</label>
-          </div>
-          <p style="color:lightblue;font-family: cursive;">Opacity:</p>
-          <div class="transparency-control">
-            <input type="range" id="transparency-slider" min="0" max="100" value="100" step="1">
-          </div>
-        </div> -->
+       
     
     </main>
 
@@ -155,16 +175,21 @@
     <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
     <!-- <script src="http://leaflet.calvinmetcalf.com/jam/shp/dist/shp.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet-draw-drawlocal-storage@1.2.3/leaflet.draw.dra.wlocal-storage.min.js"></script>
+  
+    <script src="./assets/js/fileupload.js" ></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.control.custom@2.0.9/dist/leaflet-control-custom.min.js"></script>
 
-    <!-- <script src="/assets/js/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-    <!-- <script src="./assets/js/main.js" ></script> -->
+
     <script src="./assets/js/script.js"></script>
-    <!-- <script src="./assets/js/index.js"></script> -->
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
   </body>
 </html>
 <script>
-  var map = L.map('map').setView([51.9451804, 7.5720384], 18);
+  var map = L.map('map').setView([51.94518, 7.57203], 17);
 
 var streets= L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -183,14 +208,27 @@ satellite.addTo(map); // Set a default basemap layer
 L.control.scale({metric:true}).addTo(map);
 
 
-const rgb=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
-  layers: 'ne:Rendered_RGB_2023',
+
+const rgb1=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2023_RGB_LARGE',
   transparent:true,
-   opacity:0.5,
+  // opacity:0.5,
+  maxZoom: 20,
+  maxNativeZoom: 18,
+ format: 'image/png',  
+
+})
+const rgb=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: '	Web_Portal:2020_RGB',
+  transparent:true,
+   //opacity:0.5,
   maxZoom: 20,
   maxNativeZoom: 18,
  format: 'image/png',   
-}).addTo(map);
+ 
+})
+
+
 
 
 
@@ -269,6 +307,18 @@ function exportMarkers() {
   downloadAnchor.setAttribute('download', 'markers.geojson');
   downloadAnchor.click();
 }
+
+rgb.addTo(map); // Add the first layer directly to the map
+rgb1.addTo(map); // Add the second layer directly to the map
+
+var  transparent_slider=document.getElementById('transparency-slider')
+transparent_slider.addEventListener('input',function(){
+  var opacity= this.value/100;
+  var activelayer=map.hasLayer(rgb)?rgb1:rgb;
+  activelayer.setOpacity(opacity);
+})
+
+
 
 
 </script>

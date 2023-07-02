@@ -1,4 +1,4 @@
-var map = L.map('map').setView([51.9451804, 7.5720384], 17);
+var map = L.map('map').setView([51.9451804, 7.5720384], 18);
 
 var streets= L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -6,14 +6,17 @@ var streets= L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Map data © Esri'
 });
+var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
 //var Dem=L.tileLayer('http://localhost:9000/geoserver-proxy?service=WMS&version=1.1.0&request=GetMap&layers=cite:Orthomosaic_Multispectral&bbox=7.570063780490534,51.943590542913974,7.574740819568534,51.94677105570398&width=768&height=522&srs=EPSG:4326&format=image/jpeg&STYLES=raster')
 var basemaps = {
-    'Satellite': satellite,
+    'Satellite': Esri_WorldImagery ,
     'Streets': streets,
   
   };
 L.control.layers(basemaps).addTo(map);
-satellite.addTo(map); // Set a default basemap layer
+Esri_WorldImagery.addTo(map); // Set a default basemap layer
 L.control.scale({metric:true}).addTo(map);
 //Leaflet Draw
 var drawnItems = new L.FeatureGroup();
@@ -49,24 +52,32 @@ map.on('draw:created', function (e) {
   
     drawnItems.addLayer(layer);
 });
-const rgb=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
-    layers: 'cite:Aa_2022_RGB',
-    transparent:true,
-     opacity:0.5,
-    maxZoom: 20,
-    maxNativeZoom: 18,
-   format: 'image/png',   
-});
+const ms1=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2023_Multispectral',
+  transparent:true,
+  // opacity:0.5,
+ tiled:true,
+ format: 'image/png',  
 
-const ms=L.tileLayer.wms("http://localhost:9000/geoserver-proxy", {
-    layers:'ne:ms_2023',
-    transparent:true,
-    opacity:0.8,
-    maxZoom: 20,
-    zIndex:400,
-    maxNativeZoom: 18,
-   format: 'image/png',   
-}).addTo(map);
+})
+const ms=L.tileLayer.wms("http://giv-project2.uni-muenster.de:8080/geoserver/Web_Portal/wms", {
+  layers: 'Web_Portal:2020_Multispectral',
+  transparent:true,
+  tiled:true,
+ format: 'image/png',   
+ 
+})
+ms.addTo(map); // Add the first layer directly to the map
+ms1.addTo(map); // Add the second layer directly to the map
+
+var  transparent_slider=document.getElementById('transparency-slider')
+transparent_slider.addEventListener('input',function(){
+  var opacity= this.value/100;
+  var activelayer=map.hasLayer(ms)?ms1:ms;
+  activelayer.setOpacity(opacity);
+})
+
+
 
 const imageUrl= './data/omms.jpg';
 const bounds = [[51.943590542913974, 7.570063780490534], [51.946771055703981,  7.574740819568534]];
